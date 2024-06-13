@@ -1,0 +1,13 @@
+.env*
+
+.editorconfig
+dist
+.idea
+node_modules
+.env.dev
+.DS_Store
+/.env.staging
+package-lock.json
+.vscode/settings.json
+*.log
+.vscode/launch.json
