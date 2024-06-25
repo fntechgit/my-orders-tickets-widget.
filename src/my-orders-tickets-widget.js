@@ -10,26 +10,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-import React from 'react';
+import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import WidgetReducer from './reducer'
+import { PersistGate } from 'redux-persist/integration/react'
+import { useInitStore } from './store'
+import { useTranslation } from 'react-i18next'
+import MyOrdersTickets from './components/MyOrdersTickets'
+import { RESET_STATE, setSummit } from './actions'
 
-class MyOrdersMyTicketsWidget extends React.PureComponent {
+const MyOrdersMyTicketsWidget = (props) => {
+  const {
+    loginUrl,
+    supportEmail,
+    getAccessToken,
+    getUserProfile,
+    summit,
+    apiBaseUrl,
+    user
+  } = props
+  const { t } = useTranslation()
 
-  constructor(props) {
-    super(props);
+  const { store, persistor } = useInitStore({
+    loginUrl,
+    supportEmail,
+    getAccessToken,
+    getUserProfile,
+    summit,
+    user,
+    apiBaseUrl
+  })
 
-    this.store = createStore(WidgetReducer, applyMiddleware(thunk));
+  const handleBeforeLift = () => {
+    const params = new URLSearchParams(window.location.search)
+    const flush = params.has('flushState')
+    if (flush) store.dispatch({ type: RESET_STATE, payload: null })
   }
 
-  render() {
-    return (
-      <Provider store={this.store}>
-      </Provider>
-    );
-  }
+  useEffect(() => {
+    store.dispatch(setSummit(summit))
+
+    // console.log('getstate', store.getState())
+  }, [summit])
+
+  return (
+    <Provider store={store}>
+      <PersistGate
+        onBeforeLift={handleBeforeLift}
+        loading={null}
+        persistor={persistor}
+      >
+        <h3 className='widget-title'>{t('orders.title')}</h3>
+        <MyOrdersTickets {...props} />
+      </PersistGate>
+    </Provider>
+  )
 }
 
-export default MyOrdersMyTicketsWidget;
+export default MyOrdersMyTicketsWidget

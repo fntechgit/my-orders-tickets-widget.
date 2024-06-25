@@ -11,17 +11,30 @@
  * limitations under the License.
  **/
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MyOrdersMyTicketsWidget from './my-orders-tickets-widget';
+import React from 'react'
+import MyOrdersMyTicketsWidget from './my-orders-tickets-widget'
+import { createRoot } from 'react-dom/client'
+import { storeAuthInfo } from 'openstack-uicore-foundation/lib/security/methods'
+import './i18n'
+import './styles/general.scss'
+
+/** TODO: DELETE AND USE REAL DATA PULLED FROM API */
+import { user, summit } from './__mocks__/mockData'
+
+storeAuthInfo(process.env.ACCESS_TOKEN, 0)
 
 const widgetProps = {
+  user,
+  summit,
+  getAccessToken: () => process.env.ACCESS_TOKEN,
+  apiBaseUrl: process.env.API_BASE_URL
+}
 
-};
+const container = document.getElementById('root')
+const root = createRoot(container)
 
-ReactDOM.render(
-    <div style={{width: '720px', margin: '20px auto'}}>
-        <MyOrdersMyTicketsWidget {...widgetProps} />
-    </div>,
-    document.querySelector('#root')
-);
+root.render(
+  <div className='container orders-ticket-widget-container'>
+    <MyOrdersMyTicketsWidget {...widgetProps} />
+  </div>
+)
