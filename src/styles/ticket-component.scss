@@ -1,0 +1,9 @@
+.ticket-list-container {
+  .ticket-ticket-number {
+    display: inline-block;
+    width: 80px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

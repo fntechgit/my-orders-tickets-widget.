@@ -1,0 +1,49 @@
+.order-summary-wrapper {
+  border: 1px solid#BDBDBD;
+  padding: 15px;
+  border-radius: 4px;
+  h3 {
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
+  }
+
+  .order-summary-purchased-number {
+    // border-bottom: 1px solid #BDBDBD;
+    color: #666666 !important;
+    .label {
+      color: #666666 !important;
+      font-weight: normal;
+      font-size: 0.9em;
+      padding: 0;
+    }
+    .order-order-number {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100px !important;
+      display: inline-block;
+      direction: rtl;
+    }
+    svg {
+      color: #2196f3;
+      margin-left: 10px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+  }
+  .order-summary-purchased-info {
+    padding: 15px 0;
+    .order-details-tickets {
+      list-style-type: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .order-details-amount {
+      font-size: 1em;
+    }
+  }
+
+  .order-summary-table {
+    font-size: 1.1em;
+  }
+}
